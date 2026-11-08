@@ -80,6 +80,16 @@ header{display:flex;flex-direction:column;align-items:center;text-align:center;g
 .foot button{background:none;border:0;color:var(--yellow);font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-decoration:underline;padding:0}
 .note{max-width:1040px;margin:14px auto 0;color:var(--room-mute);font-size:13px}
 @media(max-width:899px){.lower{grid-template-columns:1fr}.box{padding:12px}.frame{padding:26px 12px 20px}.ribbon{width:120px;height:120px}.ribbon span{top:22px;right:-48px;font-size:10px}}
+/* telefono in orizzontale: schermata che chiede di tornare in verticale */
+.rotate{position:fixed;inset:0;z-index:100;display:none;flex-direction:row;align-items:center;justify-content:center;gap:36px;padding:16px max(24px,env(safe-area-inset-left,0px));background:var(--room);color:#fff;text-align:left}
+.rotate::before{content:"";position:absolute;inset:14px;border:5px solid var(--yellow);outline:1.5px solid var(--yellow);outline-offset:-13px;pointer-events:none}
+.rot-phone{flex:none;width:64px;height:108px;border:6px solid var(--yellow);border-radius:14px;position:relative;animation:rot 2.8s ease-in-out infinite}
+.rot-phone::before{content:"";position:absolute;left:50%;top:8px;width:18px;height:5px;margin-left:-9px;border-radius:3px;background:var(--yellow)}
+.rotate h2{margin:0;font-size:clamp(22px,5.5vh,34px);font-weight:600;letter-spacing:.03em}
+.rotate p{margin:6px 0 0;font-size:clamp(14px,3.6vh,18px);color:#cfd6ff;max-width:24ch}
+@keyframes rot{0%,20%{transform:rotate(-90deg)}60%,100%{transform:rotate(0)}}
+@media (orientation:landscape) and (max-height:520px){.rotate{display:flex}}
+@media (prefers-reduced-motion:reduce){.rot-phone{animation:none}}
 /* conferme */
 .banner[hidden],.modal[hidden]{display:none}
 .btn.win{background:var(--navy);border-color:var(--navy)}
@@ -177,6 +187,10 @@ header{display:flex;flex-direction:column;align-items:center;text-align:center;g
     <div class="foot"><span>Carte trentine · 5 giocatori</span><span><button id="undo" type="button">Annulla ultima</button> &nbsp;·&nbsp; <button id="reset" type="button">Azzera</button></span></div>
   </div>
 </main>
+<div class="rotate" id="rotate" role="alert">
+  <div class="rot-phone" aria-hidden="true"></div>
+  <div><h2>Gira il telefono</h2><p>Trisac si usa in verticale.</p></div>
+</div>
 <div class="banner" id="banner" role="alertdialog" aria-live="assertive" aria-labelledby="b-text" hidden>
   <p id="b-text"></p>
   <div class="b-btns"><button class="btn ghost" id="b-no" type="button">Annulla</button><button class="btn lose" id="b-ok" type="button">Conferma</button></div>
